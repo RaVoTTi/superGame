@@ -1,16 +1,19 @@
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
+
+import javafx.scene.*;
+import javafx.scene.shape.*;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
+
 
 import javafx.stage.Stage;
 
@@ -22,18 +25,26 @@ import javafx.scene.text.Font;
 
 import javafx.scene.layout.VBox;
 
+import javafx.animation.AnimationTimer;
+
 
 public class TextAdventure extends Application {
 
-	private TextArea output = new TextArea();
-	
+	private TextArea output = new TextArea();	
 	private TextField input = new TextField();
 	
 	private Map<String, Command> commands = new HashMap<>();
 	
 	int Qrooms = 3;
-	
 	private Room[][] rooms = new Room[Qrooms][Qrooms];
+	
+	private ArrayList<Node> plataforms = new ArrayList<Node>();
+	
+	private Pane appRoot = new Pane();
+	private Pane gameRoot = new Pane();
+	private Pane uiRoot = new Pane();
+	
+	private Node player;
 	
 	
 	private Parent createContent() {
@@ -62,6 +73,8 @@ public class TextAdventure extends Application {
 		
 		return root;
 	}
+	
+
 	
 	
 	private void initGame() {
@@ -112,7 +125,13 @@ public class TextAdventure extends Application {
 					
 				} 
 			}
-	}
+		}
+	
+		
+		
+	
+	
+	
 	}
 
 	private void println(String line) {
@@ -120,13 +139,20 @@ public class TextAdventure extends Application {
 	}
 	
 
+	private void update() {}
+	
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		stage.setScene(new Scene(createContent()));
 		stage.show();
 
-		
+		AnimationTimer timer = new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				update(); // update 60 times for second
+			}
+		}
 	}
 	
 	public static class Launcher {
